@@ -69,7 +69,7 @@ def kvector(input_cat):
         # value of the line
         l = k[x-1][0]  # grab the previous (smaller) element in the array
         z = m*(x+1) + q  # eqn 1
-        for y in np.arange(k[x-1], nrow-1, 1, dtype=int):
+        for y in np.arange(k[x-1].item(), nrow-1):
 
             # If the calculated z matches/exceeds that of the current catalog
             # entry, increment l by 1

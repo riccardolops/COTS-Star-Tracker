@@ -31,9 +31,9 @@ img_extension = '.jpg'
 
 # Define ChArUco target
 number_of_target_rows = 5
-number_of_target_columns = 5
-aruco_square_size = 2.25*0.0254 #m
-checker_square_size = 4.5*0.0254 #m
+number_of_target_columns = 7
+aruco_square_size = 0.0220 #m
+checker_square_size = 0.0360 #m
 
 
 ################################
@@ -60,7 +60,7 @@ prev_img_shape = None
 
 # Create the ChArUco board dictionary
 dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_1000)
-Charuco_board = cv2.aruco.CharucoBoard_create(number_of_target_columns, number_of_target_rows, checker_square_size, aruco_square_size, dictionary)
+Charuco_board = cv2.aruco.CharucoBoard((number_of_target_columns, number_of_target_rows), checker_square_size, aruco_square_size, dictionary)
 
 # Extracting path of individual image stored in a given directory
 images = glob.glob('*'+img_extension)
