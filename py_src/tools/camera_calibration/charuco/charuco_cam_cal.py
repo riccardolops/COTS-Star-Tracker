@@ -30,8 +30,8 @@ show_plots = True
 img_extension = '.jpg'
 
 # Define ChArUco target
-number_of_target_rows = 5
-number_of_target_columns = 7
+number_of_target_rows = 7
+number_of_target_columns = 5
 aruco_square_size = 0.0220 #m
 checker_square_size = 0.0360 #m
 
@@ -59,7 +59,7 @@ checker_world_points[0,:,:2] = checker_square_size*np.mgrid[0:CHECKERBOARD[0], 0
 prev_img_shape = None
 
 # Create the ChArUco board dictionary
-dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_1000)
+dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_1000)
 Charuco_board = cv2.aruco.CharucoBoard((number_of_target_columns, number_of_target_rows), checker_square_size, aruco_square_size, dictionary)
 
 # Extracting path of individual image stored in a given directory
@@ -112,8 +112,10 @@ for fname in images:
             corners, ids, gray, board=Charuco_board)
 
         print("    Detected "+str(len(corners))+" corners")
+        print(num_corners)
         # If the entire ChArUco board is detected
-        if charuco_corners is not None and num_corners==16:
+        expected_corners = (number_of_target_columns - 1) * (number_of_target_rows - 1)
+        if charuco_corners is not None and num_corners == expected_corners:
             found_corner_ctr += 1
             print("    FOUND all ArUco markers in: "+fname)
 
