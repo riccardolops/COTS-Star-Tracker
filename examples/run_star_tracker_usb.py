@@ -10,10 +10,10 @@ import numpy as np
 # USER CONFIG
 ####################################
 
-CAMERA_INDEX = 0          # /dev/video0
+CAMERA_INDEX = 2  # /dev/video0
 OUTPUT_DIR = "star_images"
-NUM_IMAGES = 30           # number of frames to capture
-CAPTURE_INTERVAL = 1.0    # seconds between images
+NUM_IMAGES = 30  # number of frames to capture
+CAPTURE_INTERVAL = 1.0  # seconds between images
 
 IMAGE_PREFIX = "star"
 IMAGE_EXT = ".jpg"
@@ -35,10 +35,12 @@ if not cap.isOpened():
     raise RuntimeError("Cannot open USB camera")
 
 # -------- Camera tuning (CRITICAL for stars) --------
-cap.set(cv2.CAP_PROP_AUTO_EXPOSURE, 0.25)   # manual exposure
-cap.set(cv2.CAP_PROP_EXPOSURE, -6)          # adjust for your camera
+cap.set(cv2.CAP_PROP_AUTO_EXPOSURE, 0.25)  # manual exposure
+cap.set(cv2.CAP_PROP_EXPOSURE, -6)  # adjust for your camera
 cap.set(cv2.CAP_PROP_GAIN, 0)
 cap.set(cv2.CAP_PROP_FPS, 5)
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
 # ---------------------------------------------------
 
 print("[INFO] Letting camera stabilize...")
@@ -59,10 +61,7 @@ for i in range(NUM_IMAGES):
     # Convert to grayscale (recommended for star tracker)
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-    filename = os.path.join(
-        OUTPUT_DIR,
-        f"{IMAGE_PREFIX}_{i:04d}{IMAGE_EXT}"
-    )
+    filename = os.path.join(OUTPUT_DIR, f"{IMAGE_PREFIX}_{i:04d}{IMAGE_EXT}")
 
     cv2.imwrite(filename, gray)
     print(f"[INFO] Saved {filename}")
